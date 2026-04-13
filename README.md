@@ -65,6 +65,12 @@ This version isolates just the content-based layer with no history and no neural
 
 ---
 
+## Terminal Output
+
+![Terminal Output](assets/terminal_output.png)
+
+---
+
 ## Data Flow
 
 Input (User Preferences) → Process (Score every song) → Output (Top K Recommendations)
