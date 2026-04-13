@@ -17,17 +17,31 @@ Replace this paragraph with your own summary of what your version does.
 
 ## How The System Works
 
-Explain your design in plain language.
+Each song is represented by...
 
-Some prompts to answer:
+4 numeric audio features: 
+  - Energy
+  - Valence
+  - Acousticness
+  - Tempo_bpm
 
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
+And 2 categorical labels: 
+  - mood
+  - genre
 
-You can include a simple diagram or bullet list if helpful.
+The numeric features help capture the vibe (how intense, emotional, and how fast a song is, etc), while the labels act as lightweight tiebreakers. 
+
+The userProfile stores a single seed song chosen by the user. That song's feature values become the anchor everything else is compared against. 
+
+To be more specific, the userProfile stores:
+  - seed_song: the song the user selected
+  - seed features used for comparison: energy, valence, acousticness, tempo_bpm, mood, genre
+
+The recommender scores every other song by computing the weighted difference between its features and the seed's. Energy carries teh most weight, followed by calence, acousticness, and tempo. The differences are summed into a distance value, then flipped into a similarity score. Small bonuses are added when a candidate shares the seed's mood or genre. Songs are then ranked highest to lowest with the top results being the recommendations. 
+
+Platforms like Spotify and YouTube don't rely on a single seed song. They build a full behavioral profile per user with every listen, skip, replay, save, and search across millons of tracks. They then combine two approaches: **collaborative filtering** (finding users with similar behavior and surfacing what those users loved) and **content based filtering** (matching audio features directly, the same principle our system uses). Both signals feed into deep neural networks that re-rank hundreds of candidates in milliseconds for every user, every session, at global scale. 
+
+This version isolates just the content-based layer with no history and no neural network.
 
 ---
 
