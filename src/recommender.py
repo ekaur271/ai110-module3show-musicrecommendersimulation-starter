@@ -25,9 +25,11 @@ class UserProfile:
     Required by tests/test_recommender.py
     """
     favorite_genre: str
-    favorite_mood: str
+    favorite_mood: List[str]
     target_energy: float
-    likes_acoustic: bool
+    target_valence: float
+    target_acousticness: float
+    target_tempo_bpm: float
 
 class Recommender:
     """
